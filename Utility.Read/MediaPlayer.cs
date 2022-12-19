@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Utility.Read
         public Radio currentRadio { get; set; }
         public bool isPlaying { get; set; }
 
+        public static Status Status= Status.NORMAL;
         public static MediaPlayer GetInstance()
         {
             if (mediaPlayer == null)
@@ -42,15 +44,17 @@ namespace Utility.Read
             
             if(currentRadio == null)
             {
-                currentRadio = DataStore.GetInstance().radios.Where(x => x.Genre == currentSong.Genre).FirstOrDefault();
+                currentRadio = DataStore.GetInstance().radios.Where(x => x.Genre.Title == currentSong.Genre.Title).FirstOrDefault();
             }
-            var index = random.Next(0, currentRadio.GetList().Count);
-            while (currentRadio.GetList()[index] == currentSong)
+            List<Song> songs= DataStore.GetInstance().songs.Where(x=>x.Genre.Title==currentRadio.Genre.Title).ToList();
+
+            var index = random.Next(0, songs.Count);
+            while (songs[index] == currentSong)
             {
-                index = random.Next(0, currentRadio.GetList().Count);
+                index = random.Next(0, songs.Count);
             }
-            Play(currentRadio.GetList()[index]);
-            currentSong.SetStatus(Status.ALL);
+            Play(songs[index]);
+            SetStatus(Status.ALL);
         }
         public void Pause()
         {
@@ -71,28 +75,28 @@ namespace Utility.Read
         {
             if (currentSong != null)
             {
-                if (currentSong.getStatus() == Status.TOP)
+                if (GetStatus() == Status.TOP)
                 {
                     var topsong = Utility.GetTopFiveSongs();
                     int index = topsong.IndexOf(currentSong);
                     if (index < topsong.Count - 1)
                     {
                         Play(topsong[index + 1]);
-                        currentSong.SetStatus(Status.TOP);
+                        SetStatus(Status.TOP);
                     }
                     else
                     {
                         Play(topsong[0]);
-                        currentSong.SetStatus(Status.TOP);
+                        SetStatus(Status.TOP);
                     }
                     return "artistMenu";
                 }
-                else if (currentSong.getStatus() == Status.ALL)
+                else if (GetStatus() == Status.ALL)
                 {
                     PlayRadio();
                     return "s";
                 }
-                else if (currentSong.getStatus() == Status.ALBUM)
+                else if (GetStatus() == Status.ALBUM)
                 {
 
 
@@ -101,31 +105,31 @@ namespace Utility.Read
                     {
 
                         Play(currentAlbum.Songs[index + 1]);
-                        currentSong.SetStatus(Status.ALBUM);
+                        SetStatus(Status.ALBUM);
                     }
                     else
                     {
                         Play(currentAlbum.Songs[0]);
-                        currentSong.SetStatus(Status.ALBUM);
+                        SetStatus(Status.ALBUM);
                     }
                     return "albumMenu";
                 }
-                else if (currentSong.getStatus() == Status.PLAYLIST)
-                {
-                    var index = currentPlaylist.getSongs().IndexOf(currentSong);
-                    if (index < currentPlaylist.getSongs().Count - 1)
-                    {
+                //else if (GetStatus() == Status.PLAYLIST)
+                //{
+                //    var index = currentPlaylist.getSongs().IndexOf(currentSong);
+                //    if (index < currentPlaylist.getSongs().Count - 1)
+                //    {
 
-                        Play(currentPlaylist.getSongs()[index + 1]);
-                        currentSong.SetStatus(Status.PLAYLIST);
-                    }
-                    else
-                    {
-                        Play(currentPlaylist.getSongs()[0]);
-                        currentSong.SetStatus(Status.PLAYLIST);
-                    }
-                    return "playlistMenu";
-                }
+                //        Play(currentPlaylist.getSongs()[index + 1]);
+                //        currentSong.SetStatus(Status.PLAYLIST);
+                //    }
+                //    else
+                //    {
+                //        Play(currentPlaylist.getSongs()[0]);
+                //        currentSong.SetStatus(Status.PLAYLIST);
+                //    }
+                //    return "playlistMenu";
+                //}
             }
             return "b";
         }
@@ -133,65 +137,82 @@ namespace Utility.Read
         {
             if (currentSong != null)
             {
-                if (currentSong.getStatus() == Status.TOP)
+                if (GetStatus() == Status.TOP)
                 {
                     var topsong = Utility.GetTopFiveSongs();
                     int index = topsong.IndexOf(currentSong);
                     if (index > 0)
                     {
                         Play(topsong[index - 1]);
-                        currentSong.SetStatus(Status.TOP);
+                        SetStatus(Status.TOP);
                     }
                     else
                     {
                         Play(topsong[0]);
-                        currentSong.SetStatus(Status.TOP);
+                        SetStatus(Status.TOP);
                     }
                     return "artistMenu";
                 }
-                else if (currentSong.getStatus() == Status.ALL)
+                else if (GetStatus() == Status.ALL)
                 {
                     PlayRadio();
                     return "s";
                 }
-                else if (currentSong.getStatus() == Status.ALBUM)
+                else if (GetStatus() == Status.ALBUM)
                 {
 
                     var index = currentAlbum.Songs.IndexOf(currentSong);
                     if (index > 0)
                     {
                         Play(currentAlbum.Songs[index - 1]);
-                        currentSong.SetStatus(Status.ALBUM);
+                        SetStatus(Status.ALBUM);
                     }
                     else
                     {
                         Play(currentAlbum.Songs[0]);
-                        currentSong.SetStatus(Status.ALBUM);
+                        SetStatus(Status.ALBUM);
                     }
                     return "albumMenu";
                 }
-                else if (currentSong.getStatus() == Status.PLAYLIST)
-                {
-                    var index = currentPlaylist.getSongs().IndexOf(currentSong);
-                    if (index > 0)
-                    {
+                //else if (GetStatus() == Status.PLAYLIST)
+                //{
+                //    var index = currentPlaylist.getSongs().IndexOf(currentSong);
+                //    if (index > 0)
+                //    {
 
-                        Play(currentPlaylist.getSongs()[index - 1]);
-                        currentSong.SetStatus(Status.PLAYLIST);
-                    }
-                    else
-                    {
-                        Play(currentPlaylist.getSongs()[0]);
-                        currentSong.SetStatus(Status.PLAYLIST);
-                    }
-                    return "playlistMenu";
-                }
+                //        Play(currentPlaylist.getSongs()[index - 1]);
+                //        currentSong.SetStatus(Status.PLAYLIST);
+                //    }
+                //    else
+                //    {
+                //        Play(currentPlaylist.getSongs()[0]);
+                //        currentSong.SetStatus(Status.PLAYLIST);
+                //    }
+                //    return "playlistMenu";
+                //}
             }
             return "b";
         }
+        public void SetStatus(Status _status)
+        {
+            Status= _status;
+        }
+        public Status GetStatus()
+        {
+            return Status;
+        }
+
+        
+        
 
 
-
-
+    }
+    public enum Status
+    {
+        NORMAL,
+        ALL,
+        PLAYLIST,
+        ALBUM,
+        TOP,
     }
 }
