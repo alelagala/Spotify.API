@@ -5,6 +5,20 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility.Read", "Utility.Read\Utility.Read.csproj", "{9E38C4E3-CB41-4863-B093-911F8A30C56E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseAPI", "DatabaseAPI\DatabaseAPI.csproj", "{802783C8-93B6-4759-B70B-604F818C87DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{ED220805-2D67-4D2E-A9E0-1CD737065DE0}"
+	ProjectSection(SolutionItems) = preProject
+		Database\Dockerfile = Database\Dockerfile
+		Database\entrypoint.sh = Database\entrypoint.sh
+		Database\SqlCmdScript.sql = Database\SqlCmdScript.sql
+		Database\SqlCmdStartup.sh = Database\SqlCmdStartup.sh
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8BC9E151-4780-42D7-87EB-4E03E100C001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyClient", "..\SpotifyClient\SpotifyClient.csproj", "{561E2156-0B4D-40A2-B720-206D01DF11D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +29,18 @@ Global
 		{9E38C4E3-CB41-4863-B093-911F8A30C56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E38C4E3-CB41-4863-B093-911F8A30C56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E38C4E3-CB41-4863-B093-911F8A30C56E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{802783C8-93B6-4759-B70B-604F818C87DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{802783C8-93B6-4759-B70B-604F818C87DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{802783C8-93B6-4759-B70B-604F818C87DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{802783C8-93B6-4759-B70B-604F818C87DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BC9E151-4780-42D7-87EB-4E03E100C001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC9E151-4780-42D7-87EB-4E03E100C001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC9E151-4780-42D7-87EB-4E03E100C001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC9E151-4780-42D7-87EB-4E03E100C001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{561E2156-0B4D-40A2-B720-206D01DF11D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{561E2156-0B4D-40A2-B720-206D01DF11D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{561E2156-0B4D-40A2-B720-206D01DF11D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{561E2156-0B4D-40A2-B720-206D01DF11D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

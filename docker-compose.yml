@@ -1,0 +1,23 @@
+version: '3.4'
+
+
+
+services:
+  databaseapi:
+    image: ${DOCKER_REGISTRY-}databaseapi
+    environment:
+      - ConnectionString=Server=sql.data;User=sa;Password=Pass@word01;Database=Spotify;
+    build:
+      context: .
+      dockerfile: DatabaseAPI/Dockerfile
+    depends_on:
+      - sql.data
+
+  sql.data:
+    image: mssql-linux # Nome della nova imagine
+    build:
+      context: ./Database
+      dockerfile: Dockerfile # il Dockerfile per le struzioni dell'immagine
+    ports:
+      - "1433:1433"          # Le porte per la comunicazione externa ed interna 
+    container_name: mssql-linux  #  il nome dare dare ai contenitori che verrano creati da questa Imagine
