@@ -13,20 +13,10 @@ namespace SpotifyClient
 {
     class Program
     {
-        //static HttpClient client = new HttpClient();
-
-
-
-
         static void Main()
         {
-            UserInterface.SourceSelectionInterface();
-            var data = DataStore.GetInstance();
-            Console.WriteLine();
+            UserInterface.SourceSelectionInterface();            
             UserInterface.Router("h");
         }
-
-
-
     }
 }
